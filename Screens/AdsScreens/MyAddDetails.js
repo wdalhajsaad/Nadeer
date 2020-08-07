@@ -50,6 +50,8 @@ export default class MyAddDetails extends Component {
       userFData:[],
       ModalVisibleStatus: false,
       massages: '',
+      region:'',
+      selectedType:'',
 
     };
   }
@@ -61,7 +63,7 @@ export default class MyAddDetails extends Component {
     }
     else{
      
-          return (<Image source={{uri :uri}} style={styles.productImg}    />)
+          return (<Image source={{uri :uri}} style={styles.productImg}   resizeMode='contain' />)
     }
    }
  
@@ -69,7 +71,7 @@ export default class MyAddDetails extends Component {
      //alert()
      var id =this.props.navigation.state.params.Key;
      var ty= this.state.data.type;
-     alert(ty)
+     //alert(ty)
     this.props.navigation.navigate("UpdateAdds",{Key:id,type:ty})
    }
    Deactivate(){
@@ -108,7 +110,7 @@ getusert=(userid)=>{
   const userObj = snapshot.val();
   if(userObj != null){
    this.getusert(userObj.userkey);
-  this.setState({data:userObj});
+   this.setState({data:userObj,region:userObj.region.label,selectedType:userObj.selectedType.label});
   //alert(userObj.key)
   }
  
@@ -121,7 +123,7 @@ getusert=(userid)=>{
         return (
       <View style={{paddingTop: 15,}}>
             <View style={Styles.ViewInfo}>
-            <Text style={Styles.prodinfo}>{this.state.data.region}  </Text>
+            <Text style={Styles.prodinfo}>{this.state.region}  </Text>
             <Text style={{width:'50%', fontFamily:'ElMessiri-Regular'}}>منطقة الانتاج </Text>
             </View>
             <View style={Styles.ViewInfo}>
@@ -133,7 +135,7 @@ getusert=(userid)=>{
             <Text style={Styles.prodinfo}> السعر </Text>
             </View>
             <View style={Styles.ViewInfo}>
-            <Text style={Styles.prodinfo}>{this.state.data.selectedType}  </Text>
+            <Text style={Styles.prodinfo}>{this.state.selectedType}  </Text>
             <Text style={Styles.prodinfo}> النوع </Text>
             </View>
             <View style={{flexDirection: 'row',width:'100%',justifyContent: 'flex-end',}}>

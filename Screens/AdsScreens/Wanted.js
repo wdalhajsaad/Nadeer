@@ -228,8 +228,8 @@ setSelectedregion(valu){
     }
     this.setState({ModalVisibleStatus:true,massages:'  جاري رفع الاعلان'});
   var type =this.props.type; 
-  var selectedType= this.props.selectedType;
-  var region =this.props.region.label;
+  var selectedType= {'label':this.props.selectedType} ;
+  var region =this.props.region;
   var Note=this.props.Note;
   var userkey =this.props.userkey;
   var image =this.props.image;

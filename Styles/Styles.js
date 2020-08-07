@@ -34,6 +34,7 @@ export default StyleSheet.create({
     backgroundColor: "#fff", //'#455a64',
     justifyContent: "center",
     alignItems: "center",
+    
   },
   gridView: {
     borderRadius: 20,
@@ -95,10 +96,30 @@ export default StyleSheet.create({
     padding: 6,
     color: "#000",
     paddingRight:20,
+    fontWeight: 'normal',
     borderRadius: 5,
-     fontFamily:'ElMessiri-Bold',
+    fontFamily:'ElMessiri-Regular',
     // fontFamily:'Montserrat'
   },
+  searchSection: {
+    //flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+},
+searchIcon: {
+    padding: 10,
+},
+inputSearch: {
+    flex: 1,
+    paddingTop: 10,
+    paddingRight: 10,
+    paddingBottom: 10,
+    paddingLeft: 0,
+    backgroundColor: '#fff',
+    color: '#424242',
+},
   inputshort: {
     height: 50,
     width: "65%",
@@ -108,9 +129,10 @@ export default StyleSheet.create({
     marginLeft: 5,
     marginRight: 0,
     paddingRight:20,
+    fontWeight: 'normal',
     color: "#000",
     borderRadius: 5,
-     fontFamily:'ElMessiri-Bold',
+     fontFamily:'ElMessiri-Regular',
     // fontFamily:'Montserrat'
   },
   inputvimto: {
@@ -120,7 +142,8 @@ export default StyleSheet.create({
     marginBottom: 10,
     marginTop: 5,
     padding: 3,
-     fontFamily:'ElMessiri-Bold',
+    fontWeight: 'normal',
+     fontFamily:'ElMessiri-Regular',
 
     color: "#000",
     borderRadius: 5,
@@ -212,11 +235,12 @@ export default StyleSheet.create({
     backgroundColor: "rgba(225,225,225,0.7)",
     //padding: 10,
     paddingRight:20,
+    fontWeight: 'normal',
     color: "#000",
     borderRadius: 5,
     justifyContent: "flex-start",
     textAlignVertical: "top",
-     fontFamily:'ElMessiri-Bold',
+     fontFamily:'ElMessiri-Regular',
     //fontFamily:'Montserrat'
   },
   ButtonText: {

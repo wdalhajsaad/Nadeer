@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import { View, Text, Picker } from "react-native";
+
 
 export const ptypes = [
   { label: " النوع ", value: "1" , selected: true},
@@ -142,7 +141,7 @@ const helpers = {
      }
   },
   getKind: function (type) {
-    alert(type)
+    //alert(type)
     if (type === "P") {
       return "peanuts";
     } else if (type === "O") {

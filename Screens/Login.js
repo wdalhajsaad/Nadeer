@@ -9,10 +9,13 @@ import {
   TextInput,
   Button,
   AsyncStorage,
+  ScrollView 
 } from "react-native";
 import Styles from "../Styles/Styles";
 import Spinner from "../components/Spinner";
 import * as firebase from "firebase";
+
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 const firebaseConfig = {
   apiKey: "AIzaSyDNnGtYBuXFrgTF-zM3wikQCEX47zoZKrE",
   authDomain: "alshaayib.firebaseapp.com",
@@ -122,13 +125,20 @@ export default class Login extends React.Component {
    
 
     return (
-      
-      <View style={Styles.Logincontainer}>
+      <KeyboardAwareScrollView
+      enableOnAndroid={true}
+      keyboardShouldPersistTaps='handled'
+      //style={{ backgroundColor: '#4c69a5' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={[Styles.Keycontainer,{paddingTop: 100,}]}
+      scrollEnabled={true}
+    >
         <Image
-          style={{ alignSelf: "center", height: 150, width: 200 }}
-          source={require(".././Images/BGLn.png")}
+          style={{ alignSelf: "center", height: 200, width: 250 }}
+          source={require(".././Images/bgN.png")}
+          resizeMode='stretch'
         />
-        <View style={{ paddingTop: 100 }}>
+        <View style={{ paddingTop: 50 }}>
           <TextInput
             style={Styles.TextBoxStyle}
             autoCapitalize="none"
@@ -159,7 +169,8 @@ export default class Login extends React.Component {
         </View>
          <View style={Styles.bottomCurve}>
        </View>
-      </View>
+      
+      </KeyboardAwareScrollView>
       
     );
      }

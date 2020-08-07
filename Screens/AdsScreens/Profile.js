@@ -22,7 +22,7 @@ export default class Profile extends Component {
      static navigationOptions  = ({ navigation }) => ({
     headerStyle: { backgroundColor: '#00c3a0',textAlign: 'center',},
     title:' بياناتي',
-    headerTitleStyle : { flex:1 ,textAlign: 'center' ,color:'white',paddingVertical: 15,fontWeight:'normal' , fontFamily:'MFontRegular'},
+    headerTitleStyle : { flex:1 ,textAlign: 'center' ,color:'white',paddingVertical: 15,fontWeight:'normal' , fontFamily:'ElMessiri-Regular'},
     headerTitleAlign: 'center',
     headerTintColor: 'white',
   });
@@ -138,7 +138,7 @@ export default class Profile extends Component {
           </View>
         </Modal>
    
-<Text style={{width:'95%',  fontFamily:'MFontRegular',}}>:الاسم</Text>
+<Text style={{width:'95%',  fontFamily:'ElMessiri-Regular',}}>:الاسم</Text>
      <TextInput
           style={Styles.input}
           //placeholderStyle={{}}
@@ -154,7 +154,7 @@ export default class Profile extends Component {
           onChangeText={name => this.setState({ name })}
         />
         
-       <Text style={{width:'95%',  fontFamily:'MFontRegular',}}>:رقم الهاتف</Text>
+       <Text style={{width:'95%',  fontFamily:'ElMessiri-Regular',}}>:رقم الهاتف</Text>
          <TextInput
           style={Styles.input}
           autoCapitalize="none"

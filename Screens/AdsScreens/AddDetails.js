@@ -14,6 +14,7 @@ import {
 import * as firebase from "firebase";
 import Styles from "../../Styles/Styles";
 import Communications from 'react-native-communications';
+import { Label } from "native-base";
 const firebaseConfig = {
   apiKey: "AIzaSyDNnGtYBuXFrgTF-zM3wikQCEX47zoZKrE",
   authDomain: "alshaayib.firebaseapp.com",
@@ -38,7 +39,7 @@ export default class AddDetails extends Component {
       color: "white",
       paddingVertical: 15,
       fontWeight: "normal",
-      fontFamily:'MFontRegular'
+      fontFamily:'ElMessiri-Regular'
     },
     headerTitleAlign: "center",
     headerTintColor: 'white',
@@ -48,6 +49,8 @@ export default class AddDetails extends Component {
      this.state = {
       data:[],
       userFData:[],
+      region:'',
+      selectedType:'',
     };
   }
    RenderAddsImages(uri){
@@ -76,6 +79,14 @@ getusert=(userid)=>{
   clickEventListener() {
     Alert.alert("Success", "Product has beed added to cart");
   }
+  getregionname=()=>{
+    var res=JSON.stringify(this.state.data.region);
+   alert(res.value)
+   //return res.
+    //return res.map((data,i) => {
+     // return <Text key={i}>{data.label}</Text>; 
+    //});
+  }
   componentDidMount() {
       var id =this.props.navigation.state.params.Key;
 //alert(id);                  
@@ -83,8 +94,9 @@ getusert=(userid)=>{
   const userObj = snapshot.val();
   if(userObj != null){
    this.getusert(userObj.userkey);
-  this.setState({data:userObj});
-  //alert(userObj.image)
+  this.setState({data:userObj,region:userObj.region.label,selectedType:userObj.selectedType.label});
+  //alert(JSON.stringify(userObj.region.label))
+  //alert(JSON.stringify(this.state.data.region.label))
   }
  
 });
@@ -96,7 +108,10 @@ getusert=(userid)=>{
         return (
       <View style={{paddingTop: 15,}}>
             <View style={Styles.ViewInfo}>
-            <Text style={Styles.prodinfo}>{this.state.data.region}  </Text>
+            { /*this.satet.data.region.map((res, i) => {
+              return <Text key={i}>{res.lable}</Text>
+            })*/}
+              <Text style={[Styles.prodinfo,{textAlign: 'right'}]}>{this.state.region}  </Text>
             <Text style={{width:'50%', fontFamily:'MFontRegular'}}>منطقة الانتاج </Text>
             </View>
             <View style={Styles.ViewInfo}>
@@ -108,7 +123,7 @@ getusert=(userid)=>{
             <Text style={Styles.prodinfo}> السعر </Text>
             </View>
             <View style={Styles.ViewInfo}>
-            <Text style={Styles.prodinfo}>{this.state.data.selectedType}  </Text>
+            <Text style={[Styles.prodinfo,{textAlign: 'right'}]}>{this.state.selectedType}  </Text>
             <Text style={Styles.prodinfo}> النوع </Text>
             </View>
             <View style={{flexDirection: 'row',width:'100%',justifyContent: 'flex-end',}}>
@@ -164,7 +179,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "#00c3a0",
     //fontWeight: "bold",
-    fontFamily: "MFontBold",
+    fontFamily: "ElMessiri-Regular",
   },
   price: {
     marginTop: 10,

@@ -96,8 +96,8 @@ export default class MyAdds extends Component {
             <View style={{ flexDirection: 'row', }} >
 
               <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center', marginLeft: 15, marginRight: 20 }}>
-                <Text style={[Styles.TitleList, { color: '#00c3a0', fontFamily: 'ElMessiri-Regular' }]}>{item.KindAr} {item.selectedType}</Text>
-                <Text style={[Styles.TitleList, { fontFamily: 'ElMessiri-Regular' }]}> المدينة :{item.region}  </Text>
+                <Text style={[Styles.TitleList, { color: '#00c3a0', fontFamily: 'ElMessiri-Regular' }]}>{item.KindAr} {item.selectedType.label}</Text>
+                <Text style={[Styles.TitleList, { fontFamily: 'ElMessiri-Regular' }]}> المدينة :{item.region.label}  </Text>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', }}>
 
@@ -123,7 +123,7 @@ export default class MyAdds extends Component {
 
               <View style={{ flex: 1, alignContent: 'center', justifyContent: 'center', marginLeft: 15, marginRight: 20 }}>
                 <Text style={[Styles.TitleList, { color: '#00c3a0', fontFamily: 'ElMessiri-Regular' }]}>{item.KindAr}</Text>
-                <Text style={[Styles.TitleList, { fontFamily: 'ElMessiri-Regular' }]}>منطقة الانتاج :{item.region}  </Text>
+                <Text style={[Styles.TitleList, { fontFamily: 'ElMessiri-Regular' }]}>منطقة الانتاج :{item.region.label}  </Text>
                 <Text style={[Styles.TitleList, { color: '#00c3a0', fontFamily: 'ElMessiri-Regular' }]}>السعر : {item.price} للـ{item.waightType}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', }}>
 

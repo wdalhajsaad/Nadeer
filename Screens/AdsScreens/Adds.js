@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text,TouchableOpacity,FlatList,Image ,RefreshControl } from 'react-native';
+import { View, Text,TouchableOpacity,FlatList,Image ,RefreshControl,BackHandler } from 'react-native';
 import Styles from "../../Styles/Styles";
 import Spinner from "../../components/Spinner";
 import * as firebase from "firebase";
 import Modal from "react-native-modal";
-import { SearchBar } from 'react-native-elements';
+import { SearchBar,Button } from 'react-native-elements'; 
+import HanleBack from '../../components/HanleBack'
+import { NavigationEvents } from 'react-navigation';
+import { TextInput } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const firebaseConfig = {
@@ -42,8 +46,11 @@ export default class Adds extends Component {
       data:[],
       ModalVisibleStatus: false,
       refreshing:false,
+      textsearch:'',
     };
   }
+
+  
   _listEmpty = () => {
     return (
       <View style={{ justifyContent:'center' }}>
@@ -132,18 +139,21 @@ _handleRefresh=()=>{
 
 
    }
+   
+  
    renderItemBase=(item)=>{
      if(item.Kind=='Wanted'){
       return(
         <View>
+         
          <TouchableOpacity style={{marginRight: 10,marginLeft: 10,borderRadius:20,}}
               onPress={() =>  this.props.navigation.navigate("Matloop",{Key:item.Key})}
             >
      <View style={{flexDirection: 'row',}} >
       
        <View style={{flex:1,alignContent: 'center',justifyContent: 'center',marginLeft:15,marginRight:20}}>
-      <Text style={[Styles.TitleList,{color:'#00c3a0', fontFamily:'ElMessiri-Regular'}]}>{item.KindAr} {item.selectedType}</Text>
-        <Text style={[Styles.TitleList,{fontFamily:'ElMessiri-Regular'}]}> المدينة :{item.region}  </Text>
+      <Text style={[Styles.TitleList,{color:'#00c3a0', fontFamily:'ElMessiri-Regular'}]}>{item.KindAr} {item.selectedType.label}</Text>
+        <Text style={[Styles.TitleList,{fontFamily:'ElMessiri-Regular'}]}> المدينة :{item.region.label}  </Text>
           
        <View style={{flexDirection:'row',justifyContent: 'flex-end',}}>
         
@@ -169,7 +179,7 @@ _handleRefresh=()=>{
       
       <View style={{flex:1,alignContent: 'center',justifyContent: 'center',marginLeft:15,marginRight:20}}>
        <Text style={[Styles.TitleList,{color:'#00c3a0', fontFamily:'ElMessiri-Regular'}]}>{item.KindAr}</Text>
-        <Text style={[Styles.TitleList,{fontFamily:'ElMessiri-Regular'}]}>منطقة الانتاج :{item.region}  </Text>
+        <Text style={[Styles.TitleList,{fontFamily:'ElMessiri-Regular'}]}>منطقة الانتاج :{item.region.label}  </Text>
            <Text style={[Styles.TitleList,{color:'#00c3a0', fontFamily:'ElMessiri-Regular'}]}>السعر : {item.price} للـ{item.waightType}</Text>
        <View style={{flexDirection:'row',justifyContent: 'flex-end',}}>
         
@@ -193,8 +203,50 @@ _handleRefresh=()=>{
       );
     }
   }
+  SearchFilterFunction=(text)=>{
+   // this.setState({ ModalVisibleStatus: true})
+    firebase.database().ref("Adds/").orderByChild('active').equalTo(1).once('value').then (querySnapShot => {
+       var items = [];
+          querySnapShot.forEach((child) => {
+           
+       alert(text)
+            if(child.val().selectedType.includes(text))
+            {
+              alert(child.key);
+            items.push({
+               Key:child.key,
+               Kind:child.val().Kind,
+               image:child.val().image,
+               CreateDate:child.val().createDate,
+               Qu:child.val().Qu,
+               waightType:child.val().waightType,
+               region:child.val().region,
+               price:child.val().price,
+                KindAr:child.val().ArKind,
+                selectedType:child.val().selectedType,
+            });
+          }
+         });
+         this.setState({data:items})
+          this.setState({ ModalVisibleStatus: false})
+       
+     }).then((error)=>{
+   
+       //alert(error);
+        this.setState({ ModalVisibleStatus: false})
+     });
+  }
+  onBack(){
+   // alert('hi we are here');
+    return true;
+  }
+  getSearchData=()=>{
+    //alert(this.state.textsearch)
+    this.SearchFilterFunction(this.state.textsearch);
+  }
   render() {
     return (
+      <HanleBack onBack={this.onBack}>
        <View style={{  backgroundColor: 'red', marginLeft:15,marginRight: 15,marginBottom:20},Styles.statusBar}>
       
         <Modal isVisible={this.state.ModalVisibleStatus}>
@@ -204,18 +256,27 @@ _handleRefresh=()=>{
             </View>
         </Modal>
       {this.RenderSpinner()}
-      <View >
-        <SearchBar
-          round
-          lightTheme
-          inputContainerStyle={{backgroundColor: 'white'}}
-          searchIcon={{ size: 24 }}
-          style={Styles.input}
-          onChangeText={text => this.SearchFilterFunction(text)}
-          onClear={text => this.SearchFilterFunction('')}
-          placeholder="بحث ..."
-          value={this.state.search}
-        />
+      <View style={{flexDirection:'row',backgroundColor:'#fff'}} >
+      <TouchableOpacity style={{backgroundColor:'#00c3b0',width:'20%' ,borderRadius:20,justifyContent:'center',alignItems:'center',marginTop:2}}
+      onPress={this.getSearchData}
+      >  
+       <View>
+        
+         <Text style={{color:'#fff', fontFamily:'ElMessiri-Regular'}} >بحث</Text>
+       </View>
+        
+       </TouchableOpacity>
+       <View style={{flex: 1,flexDirection:'row',justifyContent:'center',width:'60%'}}>
+      <Icon style={Styles.searchIcon} name="search" size={20} color="#000"/>
+       <TextInput style={Styles.inputSearch}
+       placeholder='بحث...'
+       onChangeText={textsearch =>this.setState({textsearch})}
+       >
+        
+       </TextInput>
+     </View>
+      
+         
         </View>
       
        
@@ -237,7 +298,7 @@ _handleRefresh=()=>{
               
                />
 </View>
-        
+</HanleBack>
     );
   }
 }

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, Text, View,I18nManager } from 'react-native';
+import { StyleSheet, Text, View,I18nManager,BackHandler,Alert } from 'react-native';
 I18nManager.forceRTL(false);
 I18nManager.allowRTL(false);
 import Main from './Screens/Main'
@@ -51,7 +51,7 @@ export const reducer=(state=initialState,action)=>{
     return  Object.assign({},state,{region:action.text})
 
      case 'SET_SELECTED_DATE':
-      alert(action.text);
+      //alert(action.text);
     return  Object.assign({},state,{date:action.text})
      case 'SET_PRICE':
      // alert(action.text);
@@ -92,6 +92,7 @@ export default class  App  extends React.Component {
         loaded: false
     };
   }
+ 
  
   render(){
     

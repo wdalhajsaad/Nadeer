@@ -61,6 +61,7 @@ if(type==='C'){
 }
     //let pickerResult = await ImagePicker.launchImageLibraryAsync();
     console.log(pickerResult.uri);
+    alert(uri)
     let  nn= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
      this.uploadImage(pickerResult.uri,nn).then((res)=>{
          res.ref.getDownloadURL().then((url) => {
@@ -288,14 +289,14 @@ setSelectedregion(valu){
           underlineColorAndroid="rgba(0,0,0,0)"
           placeholderTextColor="#808080"
           textAlign="right"
-         value={this.props.selectedType}
+         value={this.props.selectedType.label}
           //value={this.state.Name}
           onChangeText={selectedType => this.props.setSelectedType(selectedType)}
         />
         </View>
         <DropDownPicker zIndex={999999} 
            items={this.getRegion() }
-   // defaultValue={this.state.firestPick}
+           defaultValue={this.props.region.value}
     showArrow={false}
     dropDownMaxHeight={200}
     //defaultValue={this.state.country}
@@ -352,7 +353,7 @@ setSelectedregion(valu){
                   
                   <Image source={{uri:this.props.image }} 
                    style={{width:300,height:150,}}
-                   resizeMode='cover'
+                  
                   />
   {this.renderButton()}
   

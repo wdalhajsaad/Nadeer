@@ -9,9 +9,7 @@ import * as firebase from "firebase";
 import {PermissionsAndroid} from 'react-native';
 import functions from '../../Hleper/Helper';
 import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Modal from "react-native-modal";
-import  ImagePicker from 'react-native-image-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Right} from 'native-base'
@@ -32,7 +30,7 @@ if (!firebase.apps.length) {
      static navigationOptions  = ({ navigation }) => ({
     headerStyle: { backgroundColor: '#00c3a0',textAlign: 'center',},
     title: `تعديل `,
-    headerTitleStyle : { flex:1 ,textAlign: 'center' ,color:'white',paddingVertical: 15,fontWeight:'normal' , fontFamily:'MFontRegular' },
+    headerTitleStyle : { flex:1 ,textAlign: 'center' ,color:'white',paddingVertical: 15,fontWeight:'normal' , fontFamily:'ElMessiri-Regular' },
     headerTitleAlign: 'center',
     headerTintColor: 'white',
   });
@@ -44,8 +42,18 @@ if (!firebase.apps.length) {
       ModalVisibleStatus: false,
       imageuri:'',
       massages:'',
+      selectedT:'',
      
     };
+  }
+  getRegion = () => {
+    var yy = this.props.navigation.state.params.type;
+    return functions.renderRegion(yy);
+  }
+  GetPickerType = () => {
+    var yy = this.props.navigation.state.params.type;
+    var res = functions.renderType(yy);
+    return res;
   }
   ChooseImage = async (type) => {
     var options = {
@@ -61,7 +69,6 @@ if (!firebase.apps.length) {
       },
       
     };
-    var pickerResult;
    
     
     if (type === 'L') {
@@ -79,7 +86,7 @@ if (!firebase.apps.length) {
   
         });
       }).catch((error) => {
-        alert(error);
+       // alert(error);
         this.setState({ ModalVisibleStatus: false })
       })
       
@@ -158,13 +165,14 @@ if (!firebase.apps.length) {
   }
 
   getdata(id){
-  //alert("no way"+id)
+  alert("no way"+id)
     firebase.database().ref('Adds/' + id).on('value', (snapshot) => {
         const userObj = snapshot.val();
         if(userObj != null){
           //alert(userObj.image)
          //this.getusert(userObj.userkey);
          this.props.setSelectedType(userObj.selectedType);
+         //this.setState({selectedT:userObj.selectedType})
          this.props.setSelectedregion(userObj.region);
          this.props.SetQu(userObj.Qu);
          this.props.setStatePrice(userObj.price)
@@ -183,6 +191,7 @@ setSelectedregion(valu){
   this.setState({region:valu});
 }
     async componentDidMount() {
+//alert('here update')
      // var text=this.props.navigation.state.params.Key;
       var text = this.props.navigation.state.params.type;
      // alert(text)
@@ -207,16 +216,16 @@ setSelectedregion(valu){
       } else {
       }
     } catch (error) {
-      alert(error);
+      //alert(error);
     }
 
   }
   clearForm(){
-     this.props.setSelectedType('');
+    // this.props.setSelectedType('');
        // this.props.setPageType('');
         this.props.setSelectedWaight('');
         this.props.SetQu('');
-        this.props.setSelectedregion('');
+        //this.props.setSelectedregion('');
         this.props.setSelectedDate('');
         this.props.setStatePrice('');
         this.props.setStateNote('') ;
@@ -277,7 +286,8 @@ setSelectedregion(valu){
   var Note=this.props.Note;
   var userkey =this.props.userkey;
   var image =this.props.image;
-  //alert(image);
+  alert(selectedType);
+  
   var price =this.props.price;
   var waightType =this.props.waightType;
   var Kind = functions.getKind(type) ;
@@ -306,7 +316,7 @@ setSelectedregion(valu){
       })
       .then((data) => {
         this.setState({ModalVisibleStatus:false});
-        this.clearForm()
+       
         Alert.alert('رفع البيانات',"تم تعديل  الاعلان بنجاح ",  [
         {
           text: "تم  ",
@@ -315,15 +325,16 @@ setSelectedregion(valu){
         
         ]
         )
-       
+        this.clearForm()
 
         // console.log('data ' , data)
       })
       .catch((error) => {
          this.setState({ModalVisibleStatus:false});
+         this.props.navigation.navigate("MyAdds")
         //error callback
-        alert("حدث خطأ تأكد من الاتصال بالانترنت");
-        console.log("error ", error);
+       // alert(error);
+        //console.log("error ", error);
       });
 
 
@@ -333,12 +344,12 @@ setSelectedregion(valu){
     if(uri == null || uri===""){
        
      return (<Image source={require("../.././Images/11.jpg")}  style={{width:300,height:150,}}
-     resizeMode='cover'/>)
+    />)
     }
     else{
      
           return (<Image source={{uri :uri}}  style={{width:300,height:150,}}
-            resizeMode='cover'/>)
+            />)
     }
 
 
@@ -362,49 +373,92 @@ setSelectedregion(valu){
             </View>
         </Modal>
        
-     <Picker
-        selectedValue={this.props.selectedType}
-        style={Styles.input}
-        mode="dropdown"
-        itemStyle={{ textAlign: 'center',}}
-        itemTextStyle={Styles.pickerIosListItemText}
-        onValueChange={(itemValue, itemIndex) => this.props.setSelectedType(itemValue)}
-      >
-      {functions.renderType(this.props.type)}
-      </Picker>
-        <View style={{flexDirection:'row',justifyContent:'center', width:'100%'}}>
-         <Picker
-        selectedValue={this.props.waightType}
-        style={Styles.inputvimto}
-        itemStyle={{ fontFamily: 'MFontRegular' }}
-        textStyle={{fontFamily: 'MFontRegular' }}
-        onValueChange={(itemValue, itemIndex) => this.props.setSelectedWaight(itemValue)}>
-        <Picker.Item   label="بالطن" value="طن"  />
-         <Picker.Item label="بالقنطار " value="قنطار"  />
-         </Picker>
-         <TextInput
-          style={Styles.inputshort}
-          //placeholderStyle={{}}
-          autoCapitalize="none"
-          autoCorrect={false}
-          returnKeyType="next"
-           keyboardType="numeric"
-          placeholder="الكمية "
-          underlineColorAndroid="rgba(0,0,0,0)"
-          placeholderTextColor="#808080"
-          textAlign="right"
-         value={this.props.Qu}
-          //value={this.state.Name}
-          onChangeText={Qu => this.props.SetQu( Qu )}
+        <DropDownPicker zIndex={999999}
+          items={this.GetPickerType()}
+          defaultValue={this.props.selectedType.value}
+          showArrow={false}
+          dropDownMaxHeight={200}
+          //Value={this.props.selectedType}
+          //defaultValue={}
+          containerStyle={{ height: 65 }}
+          style={Styles.input}
+          itemStyle={{
+            justifyContent: 'center',
+
+          }}
+          labelStyle={{
+            fontSize: 14,
+            textAlign: 'right',
+            color: '#808080',
+            fontFamily: 'ElMessiri-Bold',
+          }}
+          // dropDownStyle={{backgroundColor: '#fafafa'}}
+          onChangeItem={item => this.props.setSelectedType(item)}
         />
+
+<View style={{ flexDirection: 'row', justifyContent: 'center', width: '100%' }}>
+          <DropDownPicker zIndex={999999}
+            items={
+              [
+                { label: 'بالطن', value: 'طن', selected: true },
+                { label: 'بالقنطار', value: 'قنطار' },
+              ]
+            }
+            // defaultValue={this.state.firestPick}
+            showArrow={false}
+            dropDownMaxHeight={200}
+            selectedValue={this.props.waightType}
+            //defaultValue={this.state.country}
+            containerStyle={{ height: 65, width: '30%' }}
+            style={Styles.inputvimto}
+            itemStyle={{
+              justifyContent: 'center',
+
+            }}
+            labelStyle={{
+              fontSize: 14,
+              textAlign: 'right',
+              color: '#808080',
+              fontFamily: 'ElMessiri-Bold',
+            }}
+            onChangeItem={item => this.props.setSelectedWaight(item)}
+          />
+          <TextInput
+            style={Styles.inputshort}
+            autoCapitalize="none"
+            autoCorrect={false}
+            returnKeyType="next"
+            keyboardType="numeric"
+            placeholder="الكمية "
+            underlineColorAndroid="rgba(0,0,0,0)"
+            placeholderTextColor="#808080"
+            textAlign="right"
+            value={this.props.Qu}
+            onChangeText={Qu => this.props.SetQu(Qu)}
+          />
         </View>
-         <Picker
-        selectedValue={this.props.region}
-        style={Styles.input}
-        onValueChange={(itemValue, itemIndex) => this.props.setSelectedregion(itemValue)}
-      >
-       {functions.renderRegion(this.props.type)}
-      </Picker>
+        <DropDownPicker zIndex={999999}
+          items={this.getRegion()}
+          // defaultValue={this.state.firestPick}
+          defaultValue={this.props.region.value}
+          showArrow={false}
+          dropDownMaxHeight={200}
+          //defaultValue={this.state.country}
+          containerStyle={{ height: 65, width: '95%' }}
+          style={Styles.inputvimto}
+          itemStyle={{
+            justifyContent: 'center',
+
+          }}
+          labelStyle={{
+            fontSize: 14,
+            textAlign: 'right',
+            color: '#808080',
+            fontFamily: 'ElMessiri-Bold',
+          }}
+          // dropDownStyle={{backgroundColor: '#fafafa'}}
+          onChangeItem={item => this.props.setSelectedregion(item)}
+        />
       <DatePicker
         style={Styles.input}
         date={this.props.date}

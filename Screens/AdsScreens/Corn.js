@@ -222,7 +222,7 @@ class Corn extends Component {
 
   validateform() {
 
-    alert(JSON.stringify(this.props.date))
+    //alert(JSON.stringify(this.props.date))
     // return;
 
     if (this.props.selectedType.label == " النوع ") {
@@ -263,16 +263,16 @@ class Corn extends Component {
     }
     this.setState({ ModalVisibleStatus: true, massages: '  جاري رفع الاعلان' });
     var type = this.props.type;
-    var selectedType = this.props.selectedType.label;
+    var selectedType = this.props.selectedType;
     var Qu = this.props.Qu;
-    var region = this.props.region.label;
+    var region = this.props.region;
     var date = this.props.date;
     var Note = this.props.Note;
     var userkey = this.props.userkey;
     var image = this.props.image;
-    alert(type);
+    //alert(type);
     var price = this.props.price;
-    var waightType = this.props.waightType.value;
+    var waightType = this.props.waightType.label;
     var Kind = functions.getKind(type);
     //alert(Kind);
     var ArKind = functions.getKindAr(type);

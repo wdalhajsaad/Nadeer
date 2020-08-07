@@ -51,6 +51,8 @@ export default class MyMatloop extends Component {
       userFData:[],
       ModalVisibleStatus: false,
       massages: '',
+      region:'',
+      selectedType:'',
     };
   }
    RenderAddsImages(uri){
@@ -106,7 +108,7 @@ getusert=(userid)=>{
   const userObj = snapshot.val();
   if(userObj != null){
    this.getusert(userObj.userkey);
-  this.setState({data:userObj});
+   this.setState({data:userObj,region:userObj.region.label,selectedType:userObj.selectedType.label});
   //alert(userObj.image)
   }
  
@@ -121,10 +123,10 @@ getusert=(userid)=>{
             
 
             <View style={Styles.ViewInfo}>
-            <Text style={[Styles.prodinfo,{width:'100%'}]}>{this.state.data.selectedType}  </Text>
+            <Text style={[Styles.prodinfo,{width:'100%'}]}>{this.state.selectedType}  </Text>
             </View> 
             <View style={Styles.ViewInfo}>
-            <Text style={Styles.prodinfo}>{this.state.data.region}  </Text>
+            <Text style={Styles.prodinfo}>{this.state.region}  </Text>
             <Text style={{width:'50%', fontFamily:'ElMessiri-Regular'}}> المدينة / الولاية  </Text>
             </View>
 
