@@ -7,7 +7,7 @@ import {
     Image,
     TouchableOpacity,
     TextInput,
-    Button
+    Button,StatusBar
 } from 'react-native';
 import SideMenuStyle from '../Styles/SideMenuStyle'
 import { Header, Container, Content, ListItem } from 'native-base';
@@ -55,7 +55,7 @@ const CustomList = (props) => (
   
   
     <Container style={{flex:1 ,backgroundColor:"#00b494",paddingTop: 60,}}>
-      
+      <StatusBar style={{backgroundColor:'red'}} />
         <Content contentContainerStyle={{flex:1}}>
             <View style={SideMenuStyle.MainView} >
                 <ListItem style={SideMenuStyle.ItemList} button onPress={() => props.navigation.navigate('Adds')} >

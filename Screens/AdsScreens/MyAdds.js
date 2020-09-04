@@ -28,7 +28,8 @@ export default class MyAdds extends Component {
     title: ' اعلاناتي',
     headerTitleStyle: { flex: 1, textAlign: 'center', color: 'white', paddingVertical: 15, fontWeight: 'normal', fontFamily: 'ElMessiri-Regular' },
     headerTitleAlign: 'center',
-    headerLeft: null,
+    headerTintColor: 'white',
+   //headerLeft: null,
     // headerRight:(<View>
 
     //<Ionicons name="ios-add-circle-outline" size={40} onPress={()=>{ navigation.navigate("Home")}}  color="white" style={{marginRight:15}} />

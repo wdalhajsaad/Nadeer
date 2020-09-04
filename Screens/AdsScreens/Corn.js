@@ -79,7 +79,7 @@ class Corn extends Component {
 
             });
           }).catch((error) => {
-            alert(error);
+            //alert(error);
             this.setState({ ModalVisibleStatus: false })
           })
 
@@ -113,7 +113,7 @@ class Corn extends Component {
 
               });
             }).catch((error) => {
-              alert(error);
+              //alert(error);
               this.setState({ ModalVisibleStatus: false })
             })
 

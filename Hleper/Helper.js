@@ -122,6 +122,9 @@ const helpers = {
     if (t === "Sa") {
       return Satypes;
     }
+    if (t === "Ka") {
+      return [ { label: "كركدية", value: "2",selected: true, disabled: true }]//<Picker.Item label="عدسية" key="2" value="عدسية" />;
+    }
   },
 
   renderRegion: function (t) {

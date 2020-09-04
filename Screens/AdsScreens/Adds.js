@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text,TouchableOpacity,FlatList,Image ,RefreshControl,BackHandler } from 'react-native';
+import { View, Text,TouchableOpacity,FlatList,Image ,RefreshControl,BackHandler ,StatusBar} from 'react-native';
 import Styles from "../../Styles/Styles";
 import Spinner from "../../components/Spinner";
 import * as firebase from "firebase";
@@ -30,7 +30,8 @@ export default class Adds extends Component {
      static navigationOptions  = ({ navigation }) => ({
     headerStyle: { backgroundColor: '#00c3a0',textAlign: 'center',},
     title:' الاعلانات',
-    headerTitleStyle : { flex:1 ,textAlign: 'center' ,color:'white',paddingVertical: 15,fontWeight:'normal' , fontFamily:'ElMessiri-Bold'},
+    headerTitleStyle : { flex:1 ,textAlign: 'center' ,color:'white',paddingVertical: 15,fontWeight:'normal' ,
+     fontFamily:'ElMessiri-Bold'},
     headerTitleAlign: 'center',
     headerLeft: null,
    // headerRight:(<View>
@@ -145,7 +146,7 @@ _handleRefresh=()=>{
      if(item.Kind=='Wanted'){
       return(
         <View>
-         
+          
          <TouchableOpacity style={{marginRight: 10,marginLeft: 10,borderRadius:20,}}
               onPress={() =>  this.props.navigation.navigate("Matloop",{Key:item.Key})}
             >
@@ -208,11 +209,13 @@ _handleRefresh=()=>{
     firebase.database().ref("Adds/").orderByChild('active').equalTo(1).once('value').then (querySnapShot => {
        var items = [];
           querySnapShot.forEach((child) => {
-           
-       alert(text)
-            if(child.val().selectedType.includes(text))
+           var   result = JSON.stringify(child.val().selectedType.label)
+         var kAr=  JSON.stringify(child.val().ArKind)
+           //alert(result)
+       //alert(text)
+            if(result.includes(text) || kAr.includes(text))
             {
-              alert(child.key);
+             // alert(child.key);
             items.push({
                Key:child.key,
                Kind:child.val().Kind,
@@ -248,7 +251,8 @@ _handleRefresh=()=>{
     return (
       <HanleBack onBack={this.onBack}>
        <View style={{  backgroundColor: 'red', marginLeft:15,marginRight: 15,marginBottom:20},Styles.statusBar}>
-      
+       <StatusBar barStyle = "light-content" hidden = {false} backgroundColor = "#00c3a0" translucent = {true}/>
+
         <Modal isVisible={this.state.ModalVisibleStatus}>
           <View style={{  backgroundColor: 'white',height:'30%' }}>
             
@@ -288,7 +292,7 @@ _handleRefresh=()=>{
                ListEmptyComponent={this._listEmpty}
               
                  refreshControl={
-          <RefreshControl
+          <RefreshControl 
            refreshing={this.state.refreshing}
            onRefresh={this._handleRefresh}
           />

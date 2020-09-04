@@ -49,14 +49,16 @@ export default class Login extends React.Component {
       if (value !== null) {
         var res = JSON.parse(value);
        // alert(res.Pname);
-        this.props.navigation.navigate("Adds");
+        //this.props.navigation.navigate("Adds");
       } else {
-        //alert("fail");
+        //alert("فشل في جلب معلومات المستخدم ");
         this.setState({isNew:true});
       }
     } catch (error) {
       alert(error);
        this.setState({isNew:true});
+
+       
       // Error retrieving data
     }
   }
@@ -75,34 +77,24 @@ export default class Login extends React.Component {
     );
   }
   async LoginClick() {
-    if(this.state.Name===''|| this.state.Phone==='')
-    {
-      alert('الرجاء ادخال البيانات المطلوبة');
-      return;
-    }
+    //if(this.state.Name===''|| this.state.Phone==='')
+    //{
+      //alert('الرجاء ادخال البيانات المطلوبة');
+      //return;
+    //}
+    //alert('here')
     var name = this.state.Name;
     var phone = this.state.Phone;
-    firebase.database().ref("UserList/")
-      .push({
-        name,
-        phone,
-      })
-      .then((data) => {
-        var obj = {
-          Pname: name,
-          PPhone: phone,
-          Key: data.getKey(),
-        };
-        this.storedata(obj);
-        this.props.navigation.navigate("Adds");
-
-        // console.log('data ' , data)
-      })
-      .catch((error) => {
-        //error callback
-        alert("حدث خطأ تأكد من الاتصال بالانترنت");
-        console.log("error ", error);
-      });
+    fetch('http://192.168.100.4:44314/api/Users', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json'
+      }
+       
+    }).then((response) => {
+      alert('successful fetchToken response: ', response.json());
+    }).catch((error) => alert('fetchToken error: ', error))
   }
   storedata(responseData) {
     AsyncStorage.setItem(

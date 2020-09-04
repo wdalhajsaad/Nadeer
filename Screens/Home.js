@@ -6,7 +6,7 @@ export default class Home extends Component {
      static navigationOptions  = ({ navigation }) => ({
     headerStyle: { backgroundColor: '#00c3a0',textAlign: 'center',},
     title:' إضافة إعلان',
-    headerTitleStyle : { flex:1 ,textAlign: 'center' ,color:'white',paddingVertical: 15,fontWeight:'normal' ,fontFamily:'MFontRegular'},
+    headerTitleStyle : { flex:1 ,textAlign: 'center' ,color:'white',paddingVertical: 15,fontWeight:'normal' ,fontFamily:'ElMessiri-Regular'},
     headerTitleAlign: 'center',
     headerTintColor: 'white',
   });
@@ -25,6 +25,7 @@ export default class Home extends Component {
              { name: ' أمباز',  pic:require('.././Images/ombaz.jpg'), Events:null,type:'O'},
              { name: 'صمغ عربي ', pic:require('.././Images/samg.jpg'), Events:null,type:'Sa' },
              { name: 'إعلان مطلوب', pic:require('.././Images/mat.jpg'), Events:'Wanted',type:'M' },
+             { name: 'كركدية', pic:require('.././Images/Karc.jpg'), Events:null,type:'Ka' },
            
         
       ],

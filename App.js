@@ -1,8 +1,14 @@
 
 import React from 'react';
-import { StyleSheet, Text, View,I18nManager,BackHandler,Alert } from 'react-native';
+import { StyleSheet, Text, View,I18nManager,BackHandler,Alert,StatusBar  } from 'react-native';
 I18nManager.forceRTL(false);
 I18nManager.allowRTL(false);
+const ReactNative = require('react-native');
+try {
+  ReactNative.I18nManager.allowRTL(false);
+} catch (e) {
+  console.log(e);
+}
 import Main from './Screens/Main'
 import {createStore} from 'redux'
 import {Provider}  from 'react-redux'
@@ -98,6 +104,7 @@ export default class  App  extends React.Component {
     
      return (
        <Provider store={store}>
+        
            <Main />
          
        </Provider> );
